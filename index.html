@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luchiano Wireless | Phones & Repairs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --void-black: #050508; --soft-blue: #9DC4FF; --neon-cyan: #00D4FF; --neon-blue: #4D9FFF; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background: #050508; color: white; font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.6; }
+        .header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(5, 5, 8, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: 1rem 2rem; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; }
+        .logo span { color: var(--neon-cyan); }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: rgba(255, 255, 255, 0.7); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--neon-cyan); }
+        .cta-btn { background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue)); color: #050508; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; text-decoration: none; transition: transform 0.3s, box-shadow 0.3s; }
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(0, 212, 255, 0.4); }
+        .hero { min-height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 2rem 4rem; background: radial-gradient(ellipse at top, rgba(0, 212, 255, 0.1) 0%, transparent 50%), radial-gradient(ellipse at bottom, rgba(77, 159, 255, 0.1) 0%, transparent 50%); position: relative; overflow: hidden; }
+        .hero::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 212, 255, 0.03) 2px, rgba(0, 212, 255, 0.03) 4px); pointer-events: none; }
+        .hero-content { max-width: 900px; position: relative; z-index: 1; }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1.5rem; line-height: 1.1; }
+        .hero h1 span { background: linear-gradient(135deg, var(--neon-cyan), var(--soft-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.1rem; color: rgba(255, 255, 255, 0.7); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .hero-stats { display: flex; justify-content: center; gap: 3rem; margin-top: 3rem; }
+        .stat { text-align: center; }
+        .stat-value { font-size: 2.5rem; font-weight: 700; color: var(--neon-cyan); font-family: "JetBrains Mono", monospace; }
+        .stat-label { font-size: 0.875rem; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 0.1em; }
+        .filters { background: rgba(255, 255, 255, 0.03); border-top: 1px solid rgba(255, 255, 255, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: 1rem 2rem; position: sticky; top: 73px; z-index: 50; }
+        .filters-content { max-width: 1400px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+        .filter-group { display: flex; align-items: center; gap: 0.5rem; }
+        .filter-label { font-size: 0.875rem; color: rgba(255, 255, 255, 0.5); font-weight: 500; }
+        .filter-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: white; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.875rem; cursor: pointer; transition: all 0.3s; }
+        .filter-btn:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(157, 196, 255, 0.3); }
+        .filter-btn.active { background: var(--neon-cyan); color: #050508; border-color: var(--neon-cyan); }
+        .search-box { flex: 1; min-width: 200px; max-width: 300px; }
+        .search-input { width: 100%; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.1); color: white; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.875rem; }
+        .search-input::placeholder { color: rgba(255, 255, 255, 0.4); }
+        .search-input:focus { outline: none; border-color: var(--neon-cyan); }
+        .results-count { margin-left: auto; font-size: 0.875rem; color: rgba(255, 255, 255, 0.5); }
+        .products-section { padding: 3rem 2rem; max-width: 1400px; margin: 0 auto; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+        .product-card { background: #0a0a0f; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 1.25rem; transition: all 0.3s; position: relative; }
+        .product-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--neon-cyan), var(--neon-blue)); opacity: 0; transition: opacity 0.3s; }
+        .product-card:hover { border-color: rgba(0, 212, 255, 0.3); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+        .product-card:hover::before { opacity: 1; }
+        .product-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
+        .product-brand { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--soft-blue); font-weight: 600; }
+        .product-grade { font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 500; }
+        .grade-like-new { background: rgba(0, 212, 255, 0.2); color: var(--neon-cyan); }
+        .grade-a-stock { background: rgba(77, 159, 255, 0.2); color: var(--neon-blue); }
+        .grade-ab-stock { background: rgba(157, 196, 255, 0.2); color: var(--soft-blue); }
+        .product-model { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.3; }
+        .product-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .product-price { font-size: 1.35rem; font-weight: 700; color: var(--neon-cyan); font-family: "JetBrains Mono", monospace; }
+        .product-qty { font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); }
+        .product-qty span { color: var(--soft-blue); font-weight: 600; }
+        .grade-info { padding: 4rem 2rem; background: linear-gradient(180deg, transparent 0%, rgba(0, 212, 255, 0.05) 50%, transparent 100%); }
+        .grade-info-content { max-width: 1000px; margin: 0 auto; }
+        .section-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 3rem; }
+        .grade-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .grade-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 2rem; text-align: center; }
+        .grade-card-icon { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; }
+        .grade-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .grade-card p { color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; }
+        .services-section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        .service-card { background: #0a0a0f; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 2rem; text-align: center; transition: all 0.3s; }
+        .service-card:hover { border-color: var(--neon-cyan); transform: translateY(-4px); }
+        .service-icon { width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(77, 159, 255, 0.2)); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2rem; }
+        .service-card h3 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+        .service-card p { color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; }
+        .contact-section { padding: 4rem 2rem; background: linear-gradient(180deg, transparent 0%, rgba(0, 212, 255, 0.05) 50%, transparent 100%); }
+        .contact-content { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+        .contact-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 1.5rem; text-align: center; }
+        .contact-card h3 { font-size: 0.9rem; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+        .contact-card p { font-size: 1rem; color: white; }
+        .contact-card a { color: var(--neon-cyan); text-decoration: none; }
+        .whatsapp-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: #25D366; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 1rem; transition: transform 0.3s, box-shadow 0.3s; }
+        .whatsapp-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3); }
+        .footer { padding: 2rem; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.4); font-size: 0.875rem; }
+        .empty-state { text-align: center; padding: 4rem 2rem; color: rgba(255, 255, 255, 0.5); grid-column: 1 / -1; }
+        @media (max-width: 768px) { .hero h1 { font-size: 2.25rem; } .hero-stats { flex-direction: column; gap: 1.5rem; } .nav-links { display: none; } .filters-content { flex-direction: column; align-items: stretch; } .search-box { max-width: 100%; } .results-count { margin-left: 0; text-align: center; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .product-card { animation: fadeIn 0.4s ease forwards; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Luchiano<span>Wireless</span></div>
+            <nav><ul class="nav-links"><li><a href="#phones">Phones</a></li><li><a href="#grades">Grades</a></li><li><a href="#repairs">Repairs</a></li><li><a href="#contact">Contact</a></li></ul></nav>
+            <a href="#contact" class="cta-btn">Call Now</a>
+        </div>
+    </header>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Premium <span>Refurbished</span> Phones</h1>
+            <p>Quality phones at unbeatable prices. Like New, A Stock, and AB Stock grades available. Expert repair services.</p>
+            <div class="hero-stats">
+                <div class="stat"><div class="stat-value">131+</div><div class="stat-label">Phones</div></div>
+                <div class="stat"><div class="stat-value">7</div><div class="stat-label">Days/Week</div></div>
+                <div class="stat"><div class="stat-value">100%</div><div class="stat-label">Tested</div></div>
+            </div>
+        </div>
+    </section>
+    <section class="filters" id="phones">
+        <div class="filters-content">
+            <div class="filter-group">
+                <span class="filter-label">Brand:</span>
+                <button class="filter-btn active" data-filter="brand" data-value="all">All</button>
+                <button class="filter-btn" data-filter="brand" data-value="Apple">Apple</button>
+                <button class="filter-btn" data-filter="brand" data-value="Samsung">Samsung</button>
+                <button class="filter-btn" data-filter="brand" data-value="Budget">Budget</button>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Grade:</span>
+                <button class="filter-btn active" data-filter="grade" data-value="all">All</button>
+                <button class="filter-btn" data-filter="grade" data-value="Like New">Like New</button>
+                <button class="filter-btn" data-filter="grade" data-value="A Stock">A Stock</button>
+                <button class="filter-btn" data-filter="grade" data-value="AB Stock">AB Stock</button>
+            </div>
+            <div class="search-box"><input type="text" class="search-input" id="searchInput" placeholder="Search phones..."></div>
+            <div class="results-count" id="resultsCount">Showing 131 phones</div>
+        </div>
+    </section>
+    <section class="products-section"><div class="products-grid" id="productsGrid"></div></section>
+    <section class="grade-info" id="grades">
+        <div class="grade-info-content">
+            <h2 class="section-title">Our Grade System</h2>
+            <div class="grade-cards">
+                <div class="grade-card"><div class="grade-card-icon" style="background:linear-gradient(135deg,rgba(0,212,255,0.3),rgba(77,159,255,0.3))">✨</div><h3>Like New</h3><p>Pristine condition, fully tested, battery 90%+</p></div>
+                <div class="grade-card"><div class="grade-card-icon" style="background:linear-gradient(135deg,rgba(77,159,255,0.3),rgba(157,196,255,0.3))">⭐</div><h3>A Stock</h3><p>Excellent condition, minor signs of use, battery 85%+</p></div>
+                <div class="grade-card"><div class="grade-card-icon" style="background:linear-gradient(135deg,rgba(157,196,255,0.3),rgba(255,255,255,0.2))">💫</div><h3>AB Stock</h3><p>Good condition, visible wear, battery 80%+</p></div>
+            </div>
+        </div>
+    </section>
+    <section class="services-section" id="repairs">
+        <h2 class="section-title">Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card"><div class="service-icon">📱</div><h3>Phone Resale</h3><p>Buy quality refurbished phones at wholesale prices. All devices tested and guaranteed.</p></div>
+            <div class="service-card"><div class="service-icon">🔧</div><h3>Phone Repair</h3><p>Screen replacements, battery changes, charging ports, and more. Fast turnaround.</p></div>
+            <div class="service-card"><div class="service-icon">✅</div><h3>Warranty</h3><p>30-day warranty on all phones. Peace of mind with every purchase.</p></div>
+        </div>
+    </section>
+    <section class="contact-section" id="contact">
+        <h2 class="section-title">Visit Us</h2>
+        <div class="contact-content">
+            <div class="contact-card"><h3>📍 Address</h3><p>13 S 60th St<br>Philadelphia, PA 19139</p></div>
+            <div class="contact-card"><h3>📞 Phone</h3><p><a href="tel:215-284-8650">215-284-8650</a></p></div>
+            <div class="contact-card"><h3>🕐 Hours</h3><p>Daily: 7AM - 11PM</p></div>
+            <div class="contact-card"><h3>💬 WhatsApp</h3><p>Chat with us</p><a href="https://wa.me/12152848650" class="whatsapp-btn" target="_blank">Message Us</a></div>
+        </div>
+    </section>
+    <footer class="footer"><p>© 2026 Luchiano Wireless. All rights reserved.</p></footer>
+    <script>
+    const inventory = [{"brand": "Apple", "model": "iPhone 12 64GB", "grade": "Like New", "qty": 116, "price": 256.5}, {"brand": "Apple", "model": "iPhone 12 128GB", "grade": "Like New", "qty": 26, "price": 283.5}, {"brand": "Apple", "model": "iPhone 12 Pro Max 128GB", "grade": "Like New", "qty": 165, "price": 418.5}, {"brand": "Apple", "model": "iPhone 12 Pro Max 256GB", "grade": "Like New", "qty": 1, "price": 445.5}, {"brand": "Apple", "model": "iPhone 12 Pro Max 512GB", "grade": "Like New", "qty": 9, "price": 472.5}, {"brand": "Apple", "model": "iPhone 13 128GB", "grade": "Like New", "qty": 1, "price": 378.0}, {"brand": "Apple", "model": "iPhone 13 Pro 128GB", "grade": "Like New", "qty": 1, "price": 445.5}, {"brand": "Apple", "model": "iPhone 13 Pro Max 128GB", "grade": "Like New", "qty": 15, "price": 526.5}, {"brand": "Apple", "model": "iPhone 13 Pro Max 256GB", "grade": "Like New", "qty": 4, "price": 553.5}, {"brand": "Apple", "model": "iPhone 14 128GB", "grade": "Like New", "qty": 16, "price": 398.25}, {"brand": "Apple", "model": "iPhone 14 Pro 128GB", "grade": "Like New", "qty": 27, "price": 492.75}, {"brand": "Apple", "model": "iPhone 14 Pro 256GB", "grade": "Like New", "qty": 7, "price": 519.75}, {"brand": "Apple", "model": "iPhone 14 Pro Max 512GB", "grade": "Like New", "qty": 7, "price": 668.25}, {"brand": "Apple", "model": "iPhone 15 Pro 128GB", "grade": "Like New", "qty": 3, "price": 614.25}, {"brand": "Apple", "model": "iPhone 15 Pro 512GB", "grade": "Like New", "qty": 2, "price": 668.25}, {"brand": "Apple", "model": "iPhone 15 Pro Max 256GB", "grade": "Like New", "qty": 2, "price": 816.75}, {"brand": "Apple", "model": "iPhone 16 Pro Max 256GB", "grade": "Like New", "qty": 16, "price": 1080.0}, {"brand": "Apple", "model": "iPhone SE 3rd Gen 64GB", "grade": "Like New", "qty": 1, "price": 181.25}, {"brand": "Apple", "model": "iPhone XR 64GB", "grade": "Like New", "qty": 5, "price": 181.25}, {"brand": "Apple", "model": "iPhone XS Max 256GB", "grade": "Like New", "qty": 16, "price": 212.5}, {"brand": "Apple", "model": "iPhone 11 256GB", "grade": "A Stock", "qty": 5, "price": 247.0}, {"brand": "Apple", "model": "iPhone 11 Pro 256GB", "grade": "A Stock", "qty": 3, "price": 279.5}, {"brand": "Apple", "model": "iPhone 11 Pro 64GB", "grade": "A Stock", "qty": 2, "price": 260.0}, {"brand": "Apple", "model": "iPhone 12 128GB", "grade": "A Stock", "qty": 3, "price": 260.0}, {"brand": "Apple", "model": "iPhone 12 Pro 128GB", "grade": "A Stock", "qty": 4, "price": 318.5}, {"brand": "Apple", "model": "iPhone 12 Pro 256GB", "grade": "A Stock", "qty": 1, "price": 344.5}, {"brand": "Apple", "model": "iPhone 12 Pro 512GB", "grade": "A Stock", "qty": 3, "price": 370.5}, {"brand": "Apple", "model": "iPhone 12 Pro Max 128GB", "grade": "A Stock", "qty": 50, "price": 383.5}, {"brand": "Apple", "model": "iPhone 12 Pro Max 256GB", "grade": "A Stock", "qty": 2, "price": 409.5}, {"brand": "Apple", "model": "iPhone 12 Pro Max 512GB", "grade": "A Stock", "qty": 3, "price": 435.5}, {"brand": "Apple", "model": "iPhone 13 128GB", "grade": "A Stock", "qty": 1, "price": 351.0}, {"brand": "Apple", "model": "iPhone 13 Pro 128GB", "grade": "A Stock", "qty": 26, "price": 416.0}, {"brand": "Apple", "model": "iPhone 13 Pro 512GB", "grade": "A Stock", "qty": 1, "price": 468.0}, {"brand": "Apple", "model": "iPhone 13 Pro Max 128GB", "grade": "A Stock", "qty": 11, "price": 494.0}, {"brand": "Apple", "model": "iPhone 13 Pro Max 256GB", "grade": "A Stock", "qty": 7, "price": 520.0}, {"brand": "Apple", "model": "iPhone 14 128GB", "grade": "A Stock", "qty": 50, "price": 364.0}, {"brand": "Apple", "model": "iPhone 14 Pro 128GB", "grade": "A Stock", "qty": 41, "price": 455.0}, {"brand": "Apple", "model": "iPhone 14 Pro 256GB", "grade": "A Stock", "qty": 15, "price": 481.0}, {"brand": "Apple", "model": "iPhone 15 128GB", "grade": "A Stock", "qty": 2, "price": 500.5}, {"brand": "Apple", "model": "iPhone 15 Pro 128GB", "grade": "A Stock", "qty": 4, "price": 572.0}, {"brand": "Apple", "model": "iPhone 15 Pro 256GB", "grade": "A Stock", "qty": 1, "price": 598.0}, {"brand": "Apple", "model": "iPhone 15 Pro Max 256GB", "grade": "A Stock", "qty": 33, "price": 760.5}, {"brand": "Apple", "model": "iPhone 16 Pro Max 256GB", "grade": "A Stock", "qty": 51, "price": 1020.5}, {"brand": "Apple", "model": "iPhone 7 Plus 256GB", "grade": "A Stock", "qty": 1, "price": 117.0}, {"brand": "Apple", "model": "iPhone 8 64GB", "grade": "A Stock", "qty": 2, "price": 104.0}, {"brand": "Apple", "model": "iPhone SE 2nd Gen 128GB", "grade": "A Stock", "qty": 2, "price": 149.5}, {"brand": "Apple", "model": "iPhone SE 2nd Gen 256GB", "grade": "A Stock", "qty": 1, "price": 162.5}, {"brand": "Apple", "model": "iPhone SE 2nd Gen 64GB", "grade": "A Stock", "qty": 7, "price": 136.5}, {"brand": "Apple", "model": "iPhone SE 3rd Gen 64GB", "grade": "A Stock", "qty": 6, "price": 182.0}, {"brand": "Apple", "model": "iPhone X 256GB", "grade": "A Stock", "qty": 1, "price": 149.5}, {"brand": "Apple", "model": "iPhone 11 256GB", "grade": "AB Stock", "qty": 1, "price": 225.0}, {"brand": "Apple", "model": "iPhone 11 64GB", "grade": "AB Stock", "qty": 2, "price": 187.5}, {"brand": "Apple", "model": "iPhone 11 Pro 64GB", "grade": "AB Stock", "qty": 3, "price": 225.0}, {"brand": "Apple", "model": "iPhone 12 64GB", "grade": "AB Stock", "qty": 5, "price": 212.5}, {"brand": "Apple", "model": "iPhone 12 Pro 128GB", "grade": "AB Stock", "qty": 1, "price": 287.5}, {"brand": "Apple", "model": "iPhone 12 Pro 256GB", "grade": "AB Stock", "qty": 3, "price": 312.5}, {"brand": "Apple", "model": "iPhone 12 Pro Max 128GB", "grade": "AB Stock", "qty": 2, "price": 350.0}, {"brand": "Apple", "model": "iPhone 13 128GB", "grade": "AB Stock", "qty": 2, "price": 318.75}, {"brand": "Apple", "model": "iPhone 13 256GB", "grade": "AB Stock", "qty": 1, "price": 343.75}, {"brand": "Apple", "model": "iPhone 13 Mini 128GB", "grade": "AB Stock", "qty": 1, "price": 268.75}, {"brand": "Apple", "model": "iPhone 13 Pro 128GB", "grade": "AB Stock", "qty": 1, "price": 381.25}, {"brand": "Apple", "model": "iPhone 13 Pro 256GB", "grade": "AB Stock", "qty": 4, "price": 406.25}, {"brand": "Apple", "model": "iPhone 13 Pro 512GB", "grade": "AB Stock", "qty": 1, "price": 431.25}, {"brand": "Apple", "model": "iPhone 13 Pro Max 128GB", "grade": "AB Stock", "qty": 5, "price": 450.0}, {"brand": "Apple", "model": "iPhone 13 Pro Max 1TB", "grade": "AB Stock", "qty": 2, "price": 525.0}, {"brand": "Apple", "model": "iPhone 13 Pro Max 256GB", "grade": "AB Stock", "qty": 1, "price": 475.0}, {"brand": "Apple", "model": "iPhone 14 128GB", "grade": "AB Stock", "qty": 36, "price": 331.25}, {"brand": "Apple", "model": "iPhone 14 Pro 128GB", "grade": "AB Stock", "qty": 10, "price": 418.75}, {"brand": "Apple", "model": "iPhone 14 Pro 256GB", "grade": "AB Stock", "qty": 3, "price": 443.75}, {"brand": "Apple", "model": "iPhone 14 Pro 512GB", "grade": "AB Stock", "qty": 1, "price": 468.75}, {"brand": "Apple", "model": "iPhone 14 Pro Max 512GB", "grade": "AB Stock", "qty": 1, "price": 562.5}, {"brand": "Apple", "model": "iPhone 15 128GB", "grade": "AB Stock", "qty": 4, "price": 462.5}, {"brand": "Apple", "model": "iPhone 15 Pro 128GB", "grade": "AB Stock", "qty": 2, "price": 531.25}, {"brand": "Apple", "model": "iPhone 15 Pro 256GB", "grade": "AB Stock", "qty": 1, "price": 556.25}, {"brand": "Apple", "model": "iPhone 15 Pro Max 256GB", "grade": "AB Stock", "qty": 6, "price": 706.25}, {"brand": "Apple", "model": "iPhone 16 Pro Max 256GB", "grade": "AB Stock", "qty": 18, "price": 962.5}, {"brand": "Apple", "model": "iPhone 8 Plus 64GB", "grade": "AB Stock", "qty": 2, "price": 112.5}, {"brand": "Apple", "model": "iPhone SE 2nd Gen 256GB", "grade": "AB Stock", "qty": 1, "price": 143.75}, {"brand": "Apple", "model": "iPhone SE 2nd Gen 64GB", "grade": "AB Stock", "qty": 19, "price": 118.75}, {"brand": "Apple", "model": "iPhone SE 3rd Gen 64GB", "grade": "AB Stock", "qty": 31, "price": 162.5}, {"brand": "Apple", "model": "iPhone X 64GB", "grade": "AB Stock", "qty": 1, "price": 118.75}, {"brand": "Apple", "model": "iPhone XS 256GB", "grade": "AB Stock", "qty": 3, "price": 137.5}, {"brand": "Apple", "model": "iPhone XS 512GB", "grade": "AB Stock", "qty": 2, "price": 150.0}, {"brand": "Apple", "model": "iPhone XS Max 256GB", "grade": "AB Stock", "qty": 1, "price": 200.0}, {"brand": "Samsung", "model": "Galaxy A03s 32GB", "grade": "Like New", "qty": 2, "price": 87.75}, {"brand": "Samsung", "model": "Galaxy A15 5G 128GB", "grade": "Like New", "qty": 100, "price": 148.5}, {"brand": "Samsung", "model": "Galaxy A15 5G 64GB", "grade": "Like New", "qty": 2, "price": 135.0}, {"brand": "Samsung", "model": "Galaxy A16 5G", "grade": "Like New", "qty": 135, "price": 162.0}, {"brand": "Samsung", "model": "Galaxy S21 Ultra 128GB", "grade": "Like New", "qty": 37, "price": 310.5}, {"brand": "Samsung", "model": "Galaxy S22 Ultra", "grade": "Like New", "qty": 9, "price": 465.75}, {"brand": "Samsung", "model": "Galaxy S23 Ultra 256GB", "grade": "Like New", "qty": 22, "price": 641.25}, {"brand": "Motorola", "model": "Edge 256GB", "grade": "Like New", "qty": 1, "price": 148.5}, {"brand": "Motorola", "model": "One Ace 5G 64GB", "grade": "Like New", "qty": 1, "price": 108.0}, {"brand": "Sonim", "model": "XP8800 64GB", "grade": "Like New", "qty": 33, "price": 50.0}, {"brand": "TCL", "model": "30V 5G 128GB", "grade": "Like New", "qty": 43, "price": 81.25}, {"brand": "TCL", "model": "Flip 4056s", "grade": "Like New", "qty": 97, "price": 37.5}, {"brand": "TCL", "model": "Stylus 5G 128GB", "grade": "Like New", "qty": 1, "price": 81.25}, {"brand": "TCL", "model": "T10 5G 128GB", "grade": "Like New", "qty": 26, "price": 81.25}, {"brand": "TCL", "model": "V30 T781 128GB", "grade": "Like New", "qty": 7, "price": 81.25}, {"brand": "ZTE", "model": "Cymbal Flip", "grade": "Like New", "qty": 374, "price": 81.25}, {"brand": "Orbic", "model": "Journey V Flip 8GB", "grade": "Like New", "qty": 4, "price": 37.5}, {"brand": "Revvl", "model": "5", "grade": "Like New", "qty": 9, "price": 93.75}, {"brand": "Revvl", "model": "5 Plus", "grade": "Like New", "qty": 1, "price": 87.5}, {"brand": "Samsung", "model": "Galaxy A13 5G", "grade": "A Stock", "qty": 1, "price": 97.5}, {"brand": "Samsung", "model": "Galaxy A50", "grade": "A Stock", "qty": 1, "price": 182.0}, {"brand": "Samsung", "model": "Galaxy S22 Plus", "grade": "A Stock", "qty": 1, "price": 208.0}, {"brand": "Samsung", "model": "Galaxy S22 Ultra", "grade": "A Stock", "qty": 5, "price": 448.5}, {"brand": "Sonim", "model": "XP8800 64GB", "grade": "A Stock", "qty": 4, "price": 43.75}, {"brand": "Unimax", "model": "U690CP", "grade": "A Stock", "qty": 102, "price": 40.0}, {"brand": "Revvl", "model": "6 Pro", "grade": "A Stock", "qty": 16, "price": 106.25}, {"brand": "Wiko", "model": "phone", "grade": "A Stock", "qty": 1, "price": 56.25}, {"brand": "ZTE", "model": "Blade A3 plus", "grade": "A Stock", "qty": 2, "price": 75.0}, {"brand": "Orbic", "model": "Journey V Flip 8GB", "grade": "A Stock", "qty": 1, "price": 35.0}, {"brand": "Samsung", "model": "Galaxy A10e 32GB", "grade": "AB Stock", "qty": 1, "price": 50.0}, {"brand": "Samsung", "model": "Galaxy A11 32GB", "grade": "AB Stock", "qty": 1, "price": 68.75}, {"brand": "Samsung", "model": "Galaxy A12 32GB", "grade": "AB Stock", "qty": 1, "price": 87.5}, {"brand": "Samsung", "model": "Galaxy A13 5G", "grade": "AB Stock", "qty": 1, "price": 87.5}, {"brand": "Samsung", "model": "Galaxy A51 128GB", "grade": "AB Stock", "qty": 3, "price": 162.5}, {"brand": "Samsung", "model": "Galaxy Note 20 Ultra", "grade": "AB Stock", "qty": 2, "price": 325.0}, {"brand": "Samsung", "model": "Galaxy S21 Plus", "grade": "AB Stock", "qty": 1, "price": 262.5}, {"brand": "Samsung", "model": "Galaxy S22 Ultra", "grade": "AB Stock", "qty": 11, "price": 425.0}, {"brand": "Samsung", "model": "Galaxy S23 Plus 256GB", "grade": "AB Stock", "qty": 1, "price": 481.25}, {"brand": "Motorola", "model": "Moto G Stylus 5G 128GB", "grade": "AB Stock", "qty": 1, "price": 93.75}, {"brand": "Motorola", "model": "Moto X4 5G 64GB", "grade": "AB Stock", "qty": 2, "price": 100.0}, {"brand": "Motorola", "model": "One Ace 5G 64GB", "grade": "AB Stock", "qty": 2, "price": 87.5}, {"brand": "Revvl", "model": "4 Plus", "grade": "AB Stock", "qty": 1, "price": 56.25}, {"brand": "Revvl", "model": "5 Plus", "grade": "AB Stock", "qty": 3, "price": 68.75}, {"brand": "Revvl", "model": "6 Pro", "grade": "AB Stock", "qty": 130, "price": 93.75}, {"brand": "Sonim", "model": "XP8800 64GB", "grade": "AB Stock", "qty": 4, "price": 40.0}, {"brand": "TCL", "model": "Flip Pro 4056V", "grade": "AB Stock", "qty": 17, "price": 31.25}, {"brand": "Unimax", "model": "U690CP", "grade": "AB Stock", "qty": 202, "price": 37.5}];
+
+    function getBrandCategory(brand) {
+        if (brand === "Apple" || brand === "Samsung") return brand;
+        return "Budget";
+    }
+
+    function getGradeClass(grade) {
+        if (grade === "Like New") return "grade-like-new";
+        if (grade === "A Stock") return "grade-a-stock";
+        return "grade-ab-stock";
+    }
+
+    function renderProducts(products) {
+        const grid = document.getElementById("productsGrid");
+        const count = document.getElementById("resultsCount");
+        if (products.length === 0) {
+            grid.innerHTML = '<div class="empty-state"><h3>No phones found</h3><p>Try adjusting your filters</p></div>';
+            count.textContent = "Showing 0 phones";
+            return;
+        }
+        count.textContent = "Showing " + products.length + " phone" + (products.length !== 1 ? "s" : "");
+        grid.innerHTML = products.map((p, i) => '<div class="product-card" style="animation-delay:' + (i * 0.03) + 's"><div class="product-header"><span class="product-brand">' + p.brand + '</span><span class="product-grade ' + getGradeClass(p.grade) + '">' + p.grade + '</span></div><div class="product-model">' + p.model + '</div><div class="product-footer"><div class="product-price">$' + p.price.toFixed(2) + '</div><div class="product-qty">In stock: <span>' + p.qty + '</span></div></div></div>').join("");
+    }
+
+    let currentFilters = { brand: "all", grade: "all", search: "" };
+
+    function filterProducts() {
+        const filtered = inventory.filter(p => {
+            const cat = getBrandCategory(p.brand);
+            const brandMatch = currentFilters.brand === "all" || cat === currentFilters.brand;
+            const gradeMatch = currentFilters.grade === "all" || p.grade === currentFilters.grade;
+            const searchMatch = currentFilters.search === "" || p.model.toLowerCase().includes(currentFilters.search.toLowerCase()) || p.brand.toLowerCase().includes(currentFilters.search.toLowerCase());
+            return brandMatch && gradeMatch && searchMatch;
+        });
+        renderProducts(filtered);
+    }
+
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const filter = btn.dataset.filter;
+            const value = btn.dataset.value;
+            document.querySelectorAll(".filter-btn[data-filter=\"" + filter + "\"]").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentFilters[filter] = value;
+            filterProducts();
+        });
+    });
+
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+        currentFilters.search = e.target.value;
+        filterProducts();
+    });
+
+    renderProducts(inventory);
+    </script>
+</body>
+</html>
